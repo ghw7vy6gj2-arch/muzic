@@ -60,7 +60,6 @@
   let stepIndex = 0;
   let isPlaying = false;
   let isPaused = false;
-  let photoUrls = [];
 
   function seededRandom(seed) {
     let state = seed >>> 0;
@@ -529,8 +528,6 @@
   }
 
   async function showPhotoOptions(files) {
-    photoUrls.forEach((url) => URL.revokeObjectURL(url));
-    photoUrls = [];
     elements.photoOptions.replaceChildren();
     for (const file of files) {
       const option = document.createElement("p");
@@ -538,13 +535,11 @@
       elements.photoOptions.append(option);
       try {
         const { suggestion, color } = await analyzePhoto(file);
-        const imageUrl = URL.createObjectURL(file);
-        photoUrls.push(imageUrl);
         const card = document.createElement("div");
         card.className = "photo-option";
-        const thumbnail = document.createElement("img");
-        thumbnail.src = imageUrl;
-        thumbnail.alt = "";
+        const thumbnail = document.createElement("span");
+        thumbnail.className = "photo-thumbnail";
+        thumbnail.setAttribute("aria-hidden", "true");
         const info = document.createElement("div");
         const title = document.createElement("div");
         title.className = "photo-option-title";
