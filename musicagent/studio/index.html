@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#111318">
+    <title>Brutalizer Studio</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="studio.css">
+    <script src="studio.js" defer></script>
+  </head>
+  <body>
+    <main class="studio">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Brutalizer Studio home">
+          <span class="brand-mark" aria-hidden="true">B</span>
+          <span>BRUTALIZER <span class="brand-muted">STUDIO</span></span>
+        </a>
+        <div class="session-status"><span class="status-dot"></span> LOCAL SESSION</div>
+      </header>
+
+      <section class="hero">
+        <p class="eyebrow">GENERATIVE MUSIC WORKSTATION</p>
+        <h1>Make it <span>hit harder.</span></h1>
+        <p class="hero-copy">Generate a fresh loop, shape it with the Brutalizer, and play it through stereo or a 5.1-capable output.</p>
+      </section>
+
+      <section class="transport panel" aria-label="Transport and generation">
+        <div class="transport-main">
+          <button class="play-button" id="play" type="button" aria-label="Play" disabled>
+            <span id="play-icon" aria-hidden="true">▶</span>
+          </button>
+          <div class="transport-meta">
+            <div class="track-title" id="track-title">Untitled session</div>
+            <div class="transport-state" id="transport-state">Generate a loop to begin</div>
+          </div>
+          <div class="transport-actions">
+            <button class="button button-secondary" id="generate" type="button">↻ <span>Generate loop</span></button>
+            <button class="button button-quiet" id="stop" type="button" disabled>Stop</button>
+          </div>
+        </div>
+        <div class="timeline-wrap">
+          <div class="timeline-labels"><span>ARRANGEMENT</span><span id="bar-count">4 BARS · 16 STEPS</span></div>
+          <div class="timeline" id="timeline" aria-label="Generated arrangement"></div>
+        </div>
+      </section>
+
+      <div class="workspace">
+        <section class="panel generation-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">01 / COMPOSITION</p><h2>Studio generation</h2></div>
+            <span class="tag">PROCEDURAL</span>
+          </div>
+          <p class="panel-copy">Build a playable four-bar groove in your browser. Each generation creates new drums, bass, and melody.</p>
+
+          <label class="field-label" for="style">Style</label>
+          <select id="style">
+            <option value="industrial">Industrial</option>
+            <option value="hardtechno">Hard techno</option>
+            <option value="metal">Heavy metal</option>
+            <option value="ambient">Dark ambient</option>
+          </select>
+
+          <div class="photo-heading">
+            <label class="field-label" for="photo-input">Inspiration from a photo</label>
+            <span class="unit">LOCAL ONLY</span>
+          </div>
+          <label class="photo-picker" for="photo-input">
+            <span class="photo-picker-icon" aria-hidden="true">＋</span>
+            <span><strong>Choose photos</strong><small>Get a sound and mood suggestion</small></span>
+            <input id="photo-input" type="file" accept="image/*" multiple>
+          </label>
+          <div class="photo-options" id="photo-options" aria-live="polite"></div>
+
+          <div class="control-row">
+            <label class="field-label" for="tempo">Tempo <output id="tempo-value">132</output> <span class="unit">BPM</span></label>
+          </div>
+          <input id="tempo" type="range" min="70" max="180" value="132">
+
+          <div class="seed-row">
+            <label class="field-label" for="seed">Generation seed</label>
+            <button class="text-button" id="random-seed" type="button">Randomize</button>
+          </div>
+          <input id="seed" class="text-input" type="number" value="2408" min="0" max="999999" inputmode="numeric">
+
+          <button class="button button-primary generate-wide" id="generate-secondary" type="button">Generate a new arrangement <span aria-hidden="true">↗</span></button>
+        </section>
+
+        <section class="panel effects-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">02 / SOUND DESIGN</p><h2>The Brutalizer</h2></div>
+            <span class="effect-icon" aria-hidden="true">◈</span>
+          </div>
+          <p class="panel-copy">A real-time waveshaper adds grit and saturation to every track.</p>
+
+          <div class="knob-control">
+            <div class="control-row"><label class="field-label" for="drive">Drive</label><output id="drive-value">68%</output></div>
+            <input id="drive" type="range" min="0" max="100" value="68">
+          </div>
+          <div class="knob-control">
+            <div class="control-row"><label class="field-label" for="mix">Wet / dry</label><output id="mix-value">72%</output></div>
+            <input id="mix" type="range" min="0" max="100" value="72">
+          </div>
+
+          <div class="effect-readout">
+            <span class="readout-indicator" id="effect-indicator"></span>
+            <span id="effect-state">Effect ready · engage playback to hear it</span>
+          </div>
+        </section>
+      </div>
+
+      <div class="workspace lower-workspace">
+        <section class="panel humanize-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">03 / PERFORMANCE</p><h2>Humanize</h2></div>
+            <span class="humanize-icon" aria-hidden="true">〰</span>
+          </div>
+          <p class="panel-copy">Give each hit small timing and velocity variations instead of a rigid grid.</p>
+          <div class="control-row"><label class="field-label" for="humanize">Feel</label><output id="humanize-value">35%</output></div>
+          <input id="humanize" type="range" min="0" max="100" value="35">
+          <div class="range-ends"><span>LOCKED</span><span>LOOSE</span></div>
+          <div class="humanize-summary" id="humanize-summary">±8 ms timing · ±9 velocity</div>
+        </section>
+
+        <section class="panel output-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">04 / MONITORING</p><h2>Output</h2></div>
+            <span class="output-icon" aria-hidden="true">◎</span>
+          </div>
+          <div class="output-card">
+            <div class="output-card-top"><span class="channel-badge" id="channel-badge">STEREO</span><span class="output-check" aria-hidden="true">✓</span></div>
+            <h3 id="output-title">Stereo playback</h3>
+            <p id="output-copy">The browser will use your current audio output.</p>
+          </div>
+          <p class="output-note" id="output-note">5.1 is enabled automatically when your browser and selected output expose six channels.</p>
+        </section>
+      </div>
+      <footer><span>BRUTALIZER STUDIO</span><span>Audio is generated locally in your browser · no model download required</span></footer>
+    </main>
+  </body>
+</html>

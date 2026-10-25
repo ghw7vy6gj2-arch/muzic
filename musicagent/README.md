@@ -152,6 +152,17 @@ python gradio_agent.py --config config.yaml
 
 No .env file setup is required for Gradio interaction selection, but it does support only the OpenAI key.
 
+### Brutalizer Studio
+
+The standalone browser studio generates playable four-bar arrangements locally, with adjustable tempo, humanization, and real-time Brutalizer distortion. It can suggest settings from locally selected photos; photo analysis stays in your browser. The arrangement generator is procedural and does not require a trained model or API key.
+
+```bash
+cd musicagent/studio
+python -m http.server 8000
+```
+
+Open http://localhost:8000, choose **Generate loop**, then press play. Six-channel L/R/C/LFE/LS/RS routing is enabled when the browser and selected output expose at least six channels; otherwise the browser plays the mix in stereo.
+
 
 ## Citation
 
